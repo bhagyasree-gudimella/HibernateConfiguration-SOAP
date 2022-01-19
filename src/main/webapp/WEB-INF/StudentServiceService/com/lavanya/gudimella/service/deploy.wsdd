@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from StudentServiceService WSDL service -->
+
+  <service name="StudentService" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://service.gudimella.lavanya.com"/>
+      <parameter name="wsdlServiceElement" value="StudentServiceService"/>
+      <parameter name="schemaQualified" value="http://dto.gudimella.lavanya.com,http://service.gudimella.lavanya.com"/>
+      <parameter name="wsdlServicePort" value="StudentService"/>
+      <parameter name="className" value="com.lavanya.gudimella.service.StudentService"/>
+      <parameter name="wsdlPortType" value="StudentService"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://service.gudimella.lavanya.com" name="addStudent" qname="operNS:addStudent" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://service.gudimella.lavanya.com" xmlns:retNS="http://service.gudimella.lavanya.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getAllStudents" qname="operNS:getAllStudents" returnQName="retNS:getAllStudentsReturn" returnType="rtns:string" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://service.gudimella.lavanya.com" xmlns:retNS="http://service.gudimella.lavanya.com" xmlns:rtns="http://dto.gudimella.lavanya.com" name="getStudentById" qname="operNS:getStudentById" returnQName="retNS:getStudentByIdReturn" returnType="rtns:Student" soapAction="">
+        <parameter xmlns:pns="http://service.gudimella.lavanya.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://service.gudimella.lavanya.com" name="updateStudent" qname="operNS:updateStudent" soapAction="">
+        <parameter xmlns:pns="http://service.gudimella.lavanya.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id" type="tns:int"/>
+        <parameter xmlns:pns="http://service.gudimella.lavanya.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:address" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://service.gudimella.lavanya.com" name="deleteStudent" qname="operNS:deleteStudent" soapAction="">
+        <parameter xmlns:pns="http://service.gudimella.lavanya.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id" type="tns:int"/>
+      </operation>
+      <parameter name="allowedMethods" value="addStudent getStudentById updateStudent getAllStudents deleteStudent"/>
+
+      <typeMapping xmlns:ns="http://dto.gudimella.lavanya.com" qname="ns:Student" type="java:com.lavanya.gudimella.dto.Student" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>
